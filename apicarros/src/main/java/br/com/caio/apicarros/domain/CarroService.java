@@ -44,6 +44,7 @@ public class CarroService {
 	}
 
 	public void delete(Long id) {
+		System.out.println("TESTE");
 		Optional<Carro> carro = rep.findById(id);
 		if(carro.isPresent()) {
 			rep.deleteById(id);

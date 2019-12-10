@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>br.com.caio.apicarros</groupId>
 	<artifactId>apicarros</artifactId>
-	<version>1.0.0.2</version>
+	<version>1.0.0.3</version>
 	<name>apicarros</name>
 	<description>Api para carros - Marcas e Modelos</description>
 
@@ -37,13 +37,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
 		</dependency>
 
 		<dependency>
