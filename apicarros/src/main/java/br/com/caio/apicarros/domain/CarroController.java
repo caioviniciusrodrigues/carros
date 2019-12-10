@@ -30,10 +30,10 @@ public class CarroController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Carro>> get(@PathVariable("id") Long id) {
+	public ResponseEntity<Carro> get(@PathVariable("id") Long id) {
 		Optional<Carro> carro = service.getCarroById(id);
 		if(carro.isPresent()) {
-			return ResponseEntity.ok(carro);
+			return ResponseEntity.ok(carro.get());
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
