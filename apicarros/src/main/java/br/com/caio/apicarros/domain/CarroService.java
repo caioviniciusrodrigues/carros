@@ -28,8 +28,14 @@ public class CarroService {
 //		return list;
 	}
 
-	public Optional<Carro> getCarroById(Long id) {
-		return rep.findById(id);
+	public Optional<CarroDTO> getCarroById(Long id) {
+		return rep.findById(id).map(CarroDTO::new);
+/*		Optional<Carro> carro = rep.findById(id);
+		if(carro.isPresent()) {
+			return Optional.of(new CarroDTO(carro.get()));
+		} else {
+			return Optional.empty();
+		}*/
 	}
 
 	public List<CarroDTO> getCarrosByTipo(String tipo) {

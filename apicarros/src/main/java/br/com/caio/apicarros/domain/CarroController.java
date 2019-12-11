@@ -27,15 +27,15 @@ public class CarroController {
 	private CarroService service;
 	
 	@GetMapping
-	public ResponseEntity<?> get() {
+	public ResponseEntity<?> getCarros() {
 		return ResponseEntity.ok(service.getCarros());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Carro> get(@PathVariable("id") Long id) {
-		Optional<Carro> carro = service.getCarroById(id);
-		if(carro.isPresent()) {
-			return ResponseEntity.ok(carro.get());
+	public ResponseEntity<CarroDTO> get(@PathVariable("id") Long id) {
+		Optional<CarroDTO> carroDTO = service.getCarroById(id);
+		if(carroDTO.isPresent()) {
+			return ResponseEntity.ok(carroDTO.get());
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
