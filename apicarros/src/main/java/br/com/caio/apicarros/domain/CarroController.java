@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.caio.apicarros.domain.dto.CarroDTO;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/carros")
@@ -25,7 +27,7 @@ public class CarroController {
 	private CarroService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Carro>> get() {
+	public ResponseEntity<?> get() {
 		return ResponseEntity.ok(service.getCarros());
 	}
 	
@@ -39,8 +41,9 @@ public class CarroController {
 	}
 	
 	@GetMapping("tipo/{tipo}")
-	public List<Carro> getCarrosByTipo(@PathVariable("tipo") String tipo) {
-		return service.getCarrosByTipo(tipo);
+	public ResponseEntity<?> getCarrosByTipo(@PathVariable("tipo") String tipo) {		
+		List<CarroDTO> carros = service.getCarrosByTipo(tipo);		
+		return carros.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(carros);
 	}
 	
 	@PostMapping

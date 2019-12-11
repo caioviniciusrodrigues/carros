@@ -2,9 +2,12 @@ package br.com.caio.apicarros.domain;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import br.com.caio.apicarros.domain.dto.CarroDTO;
 
 @Service
 public class CarroService {
@@ -12,16 +15,25 @@ public class CarroService {
 	@Autowired
 	private CarroRepository rep;
 
-	public List<Carro> getCarros() {
-		return rep.findAll();
+	public List<CarroDTO> getCarros() {
+		
+		return rep.findAll().stream().map(CarroDTO::new).collect(Collectors.toList());
+		
+//		List<Carro> carros = rep.findAll();
+//		
+//		List<CarroDTO> list = new ArrayList<CarroDTO>();
+//		for(Carro c : carros) {
+//			list.add(new CarroDTO(c));
+//		}		
+//		return list;
 	}
 
 	public Optional<Carro> getCarroById(Long id) {
 		return rep.findById(id);
 	}
 
-	public List<Carro> getCarrosByTipo(String tipo) {
-		return rep.findByTipo(tipo);
+	public List<CarroDTO> getCarrosByTipo(String tipo) {
+		return rep.findByTipo(tipo).stream().map(CarroDTO::new).collect(Collectors.toList());
 	}
 
 	public Carro save(Carro carro) {
