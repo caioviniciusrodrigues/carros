@@ -1,7 +1,10 @@
 package br.com.caio.apicarros.domain;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.Servlet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.caio.apicarros.domain.dto.CarroDTO;
 
@@ -48,10 +52,20 @@ public class CarroController {
 	
 	@PostMapping
 	public String post(@RequestBody Carro carro) {
-		Carro c = service.save(carro);
+		try {
+			CarroDTO c = service.save(carro);
+			URI location = getUri(c.getId());
+			return ResponseEntity.created(location)
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return "Carro salvo com sucesso " + c.getId();
 	}
 	
+	private URI getUri(Long id) {		
+		return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
+	}
+
 	@PutMapping("/{id}")
 	public String put(@PathVariable("id") Long id, @RequestBody Carro carro) {
 		Carro c = service.update(carro, id);

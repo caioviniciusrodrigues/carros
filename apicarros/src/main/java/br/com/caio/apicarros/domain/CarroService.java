@@ -17,7 +17,7 @@ public class CarroService {
 
 	public List<CarroDTO> getCarros() {
 		
-		return rep.findAll().stream().map(CarroDTO::new).collect(Collectors.toList());
+		return rep.findAll().stream().map(CarroDTO::create).collect(Collectors.toList());
 		
 //		List<Carro> carros = rep.findAll();
 //		
@@ -29,7 +29,9 @@ public class CarroService {
 	}
 
 	public Optional<CarroDTO> getCarroById(Long id) {
-		return rep.findById(id).map(CarroDTO::new);
+		
+		return rep.findById(id).map(CarroDTO::create);
+		
 /*		Optional<Carro> carro = rep.findById(id);
 		if(carro.isPresent()) {
 			return Optional.of(new CarroDTO(carro.get()));
@@ -39,11 +41,11 @@ public class CarroService {
 	}
 
 	public List<CarroDTO> getCarrosByTipo(String tipo) {
-		return rep.findByTipo(tipo).stream().map(CarroDTO::new).collect(Collectors.toList());
+		return rep.findByTipo(tipo).stream().map(CarroDTO::create).collect(Collectors.toList());
 	}
 
-	public Carro save(Carro carro) {
-		return rep.save(carro);
+	public CarroDTO save(Carro carro) {
+		return CarroDTO.create(rep.save(carro));
 	}
 
 	public Carro update(Carro carro, Long id) {

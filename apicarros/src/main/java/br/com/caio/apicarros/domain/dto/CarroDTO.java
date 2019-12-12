@@ -4,18 +4,27 @@ import java.io.Serializable;
 
 import br.com.caio.apicarros.domain.Carro;
 
+import org.modelmapper.ModelMapper;
+
 public class CarroDTO implements Serializable {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	private Long id;
-	
+
 	private String nome;
 
 	private String tipo;
-	
+
 	public CarroDTO(Carro c) {
 		this.id = c.getId();
 		this.nome = c.getNome();
 		this.tipo = c.getTipo();
+	}
+
+	public static CarroDTO create(Carro c) {
+		ModelMapper modelMapper = new ModelMapper();
+		return modelMapper.map(c, CarroDTO.class);
 	}
 
 	public Long getId() {
@@ -41,6 +50,5 @@ public class CarroDTO implements Serializable {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
-	
+
 }
