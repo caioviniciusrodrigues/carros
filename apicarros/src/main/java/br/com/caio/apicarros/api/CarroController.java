@@ -1,4 +1,4 @@
-package br.com.caio.apicarros.domain;
+package br.com.caio.apicarros.api;
 
 import java.net.URI;
 import java.util.List;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.caio.apicarros.domain.Carro;
 import br.com.caio.apicarros.domain.dto.CarroDTO;
 
 @CrossOrigin
