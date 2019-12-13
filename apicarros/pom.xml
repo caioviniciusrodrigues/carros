@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>br.com.caio.apicarros</groupId>
 	<artifactId>apicarros</artifactId>
-	<version>1.0.0.5</version>
+	<version>1.0.0.6</version>
 	<name>apicarros</name>
 	<description>Api para carros - Marcas e Modelos</description>
 

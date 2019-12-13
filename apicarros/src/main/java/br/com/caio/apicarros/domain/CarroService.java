@@ -48,7 +48,7 @@ public class CarroService {
 		return CarroDTO.create(rep.save(carro));
 	}
 
-	public Carro update(Carro carro, Long id) {
+	public CarroDTO update(Carro carro, Long id) {
 
 		Optional<Carro> optional = rep.findById(id);
 		if (optional.isPresent()) {
@@ -56,18 +56,22 @@ public class CarroService {
 			carroDB.setNome(carro.getNome());
 			carroDB.setTipo(carro.getTipo());
 
-			return rep.save(carroDB);
+			rep.save(carroDB);
+			
+			return CarroDTO.create(carroDB);
 		} else {
-			throw new RuntimeException("NAO FOI POSSIVEL ATUALIZAR O CARRO");
+			return null;
 		}
 		
 	}
 
-	public void delete(Long id) {
-		System.out.println("TESTE");
+	public boolean delete(Long id) {		
 		Optional<Carro> carro = rep.findById(id);
 		if(carro.isPresent()) {
 			rep.deleteById(id);
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

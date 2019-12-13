@@ -4,8 +4,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.Servlet;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,52 +27,53 @@ public class CarroController {
 
 	@Autowired
 	private CarroService service;
-	
+
 	@GetMapping
 	public ResponseEntity<?> getCarros() {
 		return ResponseEntity.ok(service.getCarros());
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<CarroDTO> get(@PathVariable("id") Long id) {
 		Optional<CarroDTO> carroDTO = service.getCarroById(id);
-		if(carroDTO.isPresent()) {
+		if (carroDTO.isPresent()) {
 			return ResponseEntity.ok(carroDTO.get());
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
-	
+
 	@GetMapping("tipo/{tipo}")
-	public ResponseEntity<?> getCarrosByTipo(@PathVariable("tipo") String tipo) {		
-		List<CarroDTO> carros = service.getCarrosByTipo(tipo);		
+	public ResponseEntity<?> getCarrosByTipo(@PathVariable("tipo") String tipo) {
+		List<CarroDTO> carros = service.getCarrosByTipo(tipo);
 		return carros.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(carros);
 	}
-	
+
 	@PostMapping
-	public String post(@RequestBody Carro carro) {
+	public ResponseEntity<?> post(@RequestBody Carro carro) {
 		try {
 			CarroDTO c = service.save(carro);
 			URI location = getUri(c.getId());
-			return ResponseEntity.created(location)
+			return ResponseEntity.created(location).build();
 		} catch (Exception e) {
-			// TODO: handle exception
+			return ResponseEntity.badRequest().build();
 		}
-		return "Carro salvo com sucesso " + c.getId();
+
 	}
-	
-	private URI getUri(Long id) {		
+
+	private URI getUri(Long id) {
 		return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
 	}
 
 	@PutMapping("/{id}")
-	public String put(@PathVariable("id") Long id, @RequestBody Carro carro) {
-		Carro c = service.update(carro, id);
-		return "Carro atualizado com sucesso " + c.getId();
-	} 
-	
+	public ResponseEntity<?> put(@PathVariable("id") Long id, @RequestBody Carro carro) {
+		carro.setId(id);
+		CarroDTO c = service.update(carro, id);		
+		return c != null ? ResponseEntity.ok(c) : ResponseEntity.notFound().build();
+	}
+
 	@DeleteMapping("/{id}")
-	public String delete(@PathVariable("id") Long id) {
-		service.delete(id);		
-		return "Carro deletado com sucesso";		
+	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+		boolean ok = service.delete(id);		
+		return ok ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
 	}
 }
