@@ -35,7 +35,7 @@ public class CarroController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CarroDTO> get(@PathVariable("id") Long id) {
+	public ResponseEntity<CarroDTO> getCarroById(@PathVariable("id") Long id) {
 		Optional<CarroDTO> carroDTO = service.getCarroById(id);
 		if (carroDTO.isPresent()) {
 			return ResponseEntity.ok(carroDTO.get());
@@ -51,13 +51,9 @@ public class CarroController {
 
 	@PostMapping
 	public ResponseEntity<?> post(@RequestBody Carro carro) {
-		try {
-			CarroDTO c = service.save(carro);
-			URI location = getUri(c.getId());
-			return ResponseEntity.created(location).build();
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
-		}
+		CarroDTO c = service.save(carro);
+		URI location = getUri(c.getId());
+		return ResponseEntity.created(location).build();
 
 	}
 
@@ -68,13 +64,13 @@ public class CarroController {
 	@PutMapping("/{id}")
 	public ResponseEntity<?> put(@PathVariable("id") Long id, @RequestBody Carro carro) {
 		carro.setId(id);
-		CarroDTO c = service.update(carro, id);		
+		CarroDTO c = service.update(carro, id);
 		return c != null ? ResponseEntity.ok(c) : ResponseEntity.notFound().build();
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-		boolean ok = service.delete(id);		
-		return ok ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+		service.delete(id);
+		return ResponseEntity.ok().build();
 	}
 }

@@ -1,12 +1,10 @@
 package br.com.caio.apicarros.domain.dto;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-
-import br.com.caio.apicarros.domain.Carro;
 
 import org.modelmapper.ModelMapper;
+
+import br.com.caio.apicarros.domain.Carro;
 
 public class CarroDTO implements Serializable {
 
@@ -17,6 +15,9 @@ public class CarroDTO implements Serializable {
 	private String nome;
 
 	private String tipo;
+	
+	public CarroDTO() {	
+	}
 
 	public CarroDTO(Carro c) {
 		this.id = c.getId();
@@ -28,7 +29,6 @@ public class CarroDTO implements Serializable {
 		ModelMapper modelMapper = new ModelMapper();
 		return modelMapper.map(c, CarroDTO.class);
 	}
-
 
 	public Long getId() {
 		return id;
