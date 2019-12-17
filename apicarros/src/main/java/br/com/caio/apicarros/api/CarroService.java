@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.caio.apicarros.api.exception.ObjectNotFoundException;
 import br.com.caio.apicarros.domain.Carro;
 import br.com.caio.apicarros.domain.dto.CarroDTO;
 
@@ -29,9 +30,9 @@ public class CarroService {
 //		return list;
 	}
 
-	public Optional<CarroDTO> getCarroById(Long id) {
+	public CarroDTO getCarroById(Long id) {
 
-		return rep.findById(id).map(CarroDTO::create);
+		return rep.findById(id).map(CarroDTO::create).orElseThrow( () -> new ObjectNotFoundException("CARRO NAO ENCONTRADO"));
 
 		/*
 		 * Optional<Carro> carro = rep.findById(id); if(carro.isPresent()) { return
@@ -48,21 +49,26 @@ public class CarroService {
 	}
 
 	public CarroDTO update(Carro carro, Long id) {
+		
+        // Busca o carro no banco de dados
+        Optional<Carro> optional = rep.findById(id);
+        if(optional.isPresent()) {
+            Carro db = optional.get();
+            // Copiar as propriedades
+            db.setNome(carro.getNome());
+            db.setTipo(carro.getTipo());
+            System.out.println("Carro id " + db.getId());
 
-		Optional<Carro> optional = rep.findById(id);
-		if (optional.isPresent()) {
-			Carro carroDB = optional.get();
-			carroDB.setNome(carro.getNome());
-			carroDB.setTipo(carro.getTipo());
+            // Atualiza o carro
+            rep.save(db);
 
-			rep.save(carroDB);
+            return CarroDTO.create(db);
+        } else {
+            return null;
+            //throw new RuntimeException("Não foi possível atualizar o registro");
+        }
+    }
 
-			return CarroDTO.create(carroDB);
-		} else {
-			return null;
-		}
-
-	}
 
 	public void delete(Long id) {
 		rep.deleteById(id);
