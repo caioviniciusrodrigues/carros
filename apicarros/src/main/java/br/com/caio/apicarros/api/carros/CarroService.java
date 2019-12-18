@@ -1,4 +1,4 @@
-package br.com.caio.apicarros.api;
+package br.com.caio.apicarros.api.carros;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.caio.apicarros.api.exception.ObjectNotFoundException;
+import br.com.caio.apicarros.api.infra.exception.ObjectNotFoundException;
 import br.com.caio.apicarros.domain.Carro;
 import br.com.caio.apicarros.domain.dto.CarroDTO;
 

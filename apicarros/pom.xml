@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>br.com.caio.apicarros</groupId>
 	<artifactId>apicarros</artifactId>
-	<version>1.0.0.6</version>
+	<version>1.0.0.7</version>
 	<name>apicarros</name>
 	<description>Api para carros - Marcas e Modelos</description>
 
@@ -21,6 +21,39 @@
 	</properties>
 
 	<dependencies>
+
+		<!-- JWT -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.10.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.10.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.10.5</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.9</version>
+		</dependency>
+
+		<!-- Firebase Admin -->
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>6.8.0</version>
+		</dependency>
 
 		<!-- Lombok: https://projectlombok.org/ -->
 		<dependency>
@@ -87,6 +120,13 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>spring-repo</id>
+			<url>https://maven.google.com/</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>

@@ -9,4 +9,5 @@ import br.com.caio.apicarros.domain.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	
 	public User findUserByLogin(String login);
+	
 }

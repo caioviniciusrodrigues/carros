@@ -1,4 +1,4 @@
-package br.com.caio.apicarros.api;
+package br.com.caio.apicarros.api.carros;
 
 import java.util.List;
 
